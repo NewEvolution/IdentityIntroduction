@@ -15,6 +15,7 @@ using IdentityIntro.Services;
 namespace IdentityIntro.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

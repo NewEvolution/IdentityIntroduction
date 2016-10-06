@@ -13,6 +13,7 @@ using IdentityIntro.Services;
 namespace IdentityIntro.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
