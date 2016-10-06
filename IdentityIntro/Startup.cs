@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using IdentityIntro.Data;
 using IdentityIntro.Models;
 using IdentityIntro.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityIntro
 {
@@ -47,7 +48,10 @@ namespace IdentityIntro
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
