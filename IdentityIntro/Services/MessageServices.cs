@@ -26,7 +26,7 @@ namespace IdentityIntro.Services
         {
             var myMessage = new SendGrid.SendGridMessage();
             myMessage.AddTo(email);
-            myMessage.From = new System.Net.Mail.MailAddress("ryantanay@newevolution.org", "Ryan Tanay");
+            myMessage.From = new System.Net.Mail.MailAddress("id.intro@mailinator.com", "Identity Introduction");
             myMessage.Subject = subject;
             myMessage.Text = message;
             myMessage.Html = message;
