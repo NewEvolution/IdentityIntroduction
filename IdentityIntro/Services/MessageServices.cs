@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Clients;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace IdentityIntro.Services
 {
@@ -20,7 +24,6 @@ namespace IdentityIntro.Services
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            // Plug in your email service here to send an email.
             var myMessage = new SendGrid.SendGridMessage();
             myMessage.AddTo(email);
             myMessage.From = new System.Net.Mail.MailAddress("ryantanay@newevolution.org", "Ryan Tanay");
@@ -35,10 +38,18 @@ namespace IdentityIntro.Services
             return transportWeb.DeliverAsync(myMessage);
         }
 
-        public Task SendSmsAsync(string number, string message)
+        public async Task SendSmsAsync(string number, string message)
         {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
+            TwilioClient.Init(Options.SID, Options.AuthToken);
+            var restClient = new TwilioRestClient(Options.SID, Options.AuthToken);
+
+            var sms = await
+                new MessageCreator(
+                    Options.SID,
+                    new PhoneNumber(number),
+                    new PhoneNumber(Options.SendNumber),
+                    message
+                ).ExecuteAsync(restClient);
         }
     }
 }
